@@ -177,6 +177,7 @@ function SignupForm({ onCloseModal }) {
           {isSigningUp ? <SpinnerMini /> : "Create new user"}
         </Button>
       </FormRow>
+      <p style={{ color: 'red' }}>Siging up is blocked, please contact me for allowing this function</p>
     </Form>
   );
 }
