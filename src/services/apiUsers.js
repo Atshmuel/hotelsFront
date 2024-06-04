@@ -81,7 +81,7 @@ export async function signupUser(newUserData) {
     body: JSON.stringify(newUserData),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data);
+  if (!res.ok) throw new Error(data.message);
   return data;
 }
 
@@ -91,7 +91,7 @@ export async function deleteUser(id) {
     credentials: "include",
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data?.error || data);
+  if (!res.ok) throw new Error(data?.message || data);
   return data;
 }
 

@@ -20,7 +20,6 @@ export const getCabins = async () => {
 };
 
 export const createCabin = async (newCabinData) => {
-  console.log(newCabinData);
   const res = await fetch(`${SERVER_URL}cabins`, {
     method: "POST",
     mode: "cors",
@@ -32,13 +31,13 @@ export const createCabin = async (newCabinData) => {
     body: JSON.stringify(newCabinData),
   });
   const data = await res.json();
+  console.log(data);
   if (!res.ok) {
     if (res.status === 403) {
-      // await refreshTokenFunc();
-      console.log(data);
+      await refreshTokenFunc();
       throw Error(data.message);
     }
-    throw new Error(data?.error);
+    throw new Error(data?.message || data?.error);
   }
   return data;
 };
