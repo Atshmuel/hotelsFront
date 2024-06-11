@@ -127,7 +127,7 @@ function SignupForm({ onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow label="Role" hidden={role !== "admin"}>
+      <FormRow label="Role" hidden={role === "employee"}>
         <Select
           id="userRole"
           {...register("userRole")}

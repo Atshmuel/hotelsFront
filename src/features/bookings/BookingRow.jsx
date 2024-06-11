@@ -1,13 +1,6 @@
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import Tag from "../../ui/Tag";
-import Table from "../../ui/Table";
-import Modal from "../../ui/Modal";
-import Menus from "../../ui/Menus";
-
-import ConfirmDelete from "../../ui/ConfirmDelete";
-
 import {
   HiArrowDownOnSquare,
   HiArrowRightOnRectangle,
@@ -15,13 +8,21 @@ import {
   HiTrash,
 } from "react-icons/hi2";
 
-import { formatCurrency } from "../../utils/helpers";
-import { formatDistanceFromNow } from "../../utils/helpers";
+import Tag from "../../ui/Tag";
+import Table from "../../ui/Table";
+import Modal from "../../ui/Modal";
+import Menus from "../../ui/Menus";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+
 
 import ConfirmCheckOut from "../check-in-out/ConfirmCheckOut";
 import { useCheckout } from "../check-in-out/useCheckout";
 import { useDeleteBooking } from "./useDeleteBooking";
 import { useUser } from "../authentication/useUser";
+
+import { formatCurrency } from "../../utils/helpers";
+import { formatDistanceFromNow } from "../../utils/helpers";
+
 const Cabin = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
@@ -71,7 +72,6 @@ function BookingRow({
     "checked-in": "green",
     "checked-out": "silver",
   };
-
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
@@ -114,7 +114,7 @@ function BookingRow({
                 >
                   Check in
                 </Menus.Button>
-                {user.role === "admin" && (
+                {user.role !== "employee" && (
                   <Modal.Open opens="delete-booking">
                     <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
                   </Modal.Open>

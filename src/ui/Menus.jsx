@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
 import useOutsideClick from "../hooks/useOutsideClick";
+
 const Menu = styled.div`
   display: flex;
   align-items: center;
@@ -116,7 +117,6 @@ function Toggle({ children, id }) {
 function List({ children, id }) {
   const { currOpenId, openPosition, close } = useContext(MenusContext);
   const ref = useOutsideClick(close, false);
-
   if (id !== currOpenId) return null;
 
   return createPortal(

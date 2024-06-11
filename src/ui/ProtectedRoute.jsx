@@ -19,6 +19,7 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     if (!user && !isLoadingUserData) return navigation("/login");
   }, [user, isLoadingUserData, navigation])
+
   if (isLoadingUserData)
     return (
       <FullPage>

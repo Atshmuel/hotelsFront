@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
-
-import { formatUpperCase } from "../../utils/helpers";
-import Modal from "../../ui/Modal";
-import SpinnerMini from "../../ui/SpinnerMini";
-
-import ConfirmDelete from "../../ui/ConfirmDelete";
-import Menus from "../../ui/Menus";
 import { HiArrowTrendingDown, HiArrowTrendingUp, HiTrash, HiUserCircle } from "react-icons/hi2";
+
 import { useUser } from "./useUser";
 import { useDeleteUser } from "./useDeleteUser";
 import { useUpdateUser } from "./useUpdateUser";
+import { formatUpperCase } from "../../utils/helpers";
+
+import Menus from "../../ui/Menus";
+import Modal from "../../ui/Modal";
+import SpinnerMini from "../../ui/SpinnerMini";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 
 const TableRow = styled.div`
@@ -78,8 +78,7 @@ function UserRow({ user }) {
   const { updateUserData, isUpdatingUser } = useUpdateUser();
 
   const { user: currUser } = useUser();
-  const employeeIsAdmin = role === "admin";
-
+  const employeeIsAdmin = role !== "employee";
   function handleRoleChange(role, id) {
     updateUserData({ role, id })
   }
@@ -102,28 +101,34 @@ function UserRow({ user }) {
           formatUpperCase(role)
         )}
       </PersonalInfo>}
-
-      {currUser.role === "admin" && (
+      {currUser.role !== "employee" && (
         <Modal>
-          <Menus>
+          <Menus.Menu>
             <Menus.Toggle id={userId} />
             <Menus.List id={userId}>
               {!employeeIsAdmin &&
                 <Menus.Button icon={<HiArrowTrendingUp />} onClick={() => handleRoleChange('admin', userId)}>Promote</Menus.Button>}
-              {employeeIsAdmin &&
+              {currUser.role !== 'employee' && employeeIsAdmin &&
                 <Menus.Button icon={<HiArrowTrendingDown />} onClick={() => handleRoleChange('employee', userId)}>Demote</Menus.Button>}
-              <Modal.Open opens="delete-employee">
-                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-              </Modal.Open>
+              {currUser.role === 'admin' && role === 'employee' &&
+                <Modal.Open opens="delete-employee">
+                  <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+                </Modal.Open>}
+              {
+                currUser.role === 'owner' &&
+                <Modal.Open opens="delete-employee">
+                  <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+                </Modal.Open>
+              }
             </Menus.List>
-          </Menus>
-          <Modal.Window name="delete-employee">
-            <ConfirmDelete
-              resourceName="employee"
-              onConfirm={() => deleteUser(userId)}
-              disabled={isDeletingUser}
-            />
-          </Modal.Window>
+            <Modal.Window name="delete-employee">
+              <ConfirmDelete
+                resourceName="employee"
+                onConfirm={() => deleteUser(userId)}
+                disabled={isDeletingUser}
+              />
+            </Modal.Window>
+          </Menus.Menu>
         </Modal>
       )}
     </TableRow>

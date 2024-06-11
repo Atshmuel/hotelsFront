@@ -10,7 +10,7 @@ function Settings() {
   const { user } = useUser();
 
   useEffect(() => {
-    if (user.role !== "admin") navigation("/dashboard", { replace: true });
+    if (user.role === "employee") navigation("/dashboard", { replace: true });
   }, [user, navigation]);
 
   return (

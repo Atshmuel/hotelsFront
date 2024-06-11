@@ -88,7 +88,7 @@ function MainNav() {
           </StyledNavLink>
         </li>
 
-        {user.role === "admin" && (
+        {user.role !== "employee" && (
           <li>
             <StyledNavLink to="/settings">
               <HiOutlineCog8Tooth />

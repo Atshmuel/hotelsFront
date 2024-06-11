@@ -19,7 +19,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     defaultValues: isEditting ? editValues : {},
   });
   const { errors } = formState;
-
   function onSubmit(formData) {
     if (isEditting) {
       updateCabin(
@@ -97,8 +96,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
             min: { value: 0, message: "Discount cannot be less than '0' !" },
             validate: (value) =>
               value <= getValues().regularPrice - 100 ||
-              `Discount value must be 100$ less than the cabin regular price.  (Max discount $${
-                getValues().regularPrice - 100
+              `Discount value must be 100$ less than the cabin regular price.  (Max discount $${getValues().regularPrice - 100
               })`,
           })}
         />

@@ -75,7 +75,7 @@ export const editCabin = async (id, newCabinData) => {
       await refreshTokenFunc();
       throw Error(data.message);
     }
-    throw new Error(data?.error || "Could not perform your request.");
+    throw new Error(data?.error || data?.message || "Could not perform your request.");
   }
   return data;
 };
