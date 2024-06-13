@@ -5,7 +5,10 @@ export const getAllBookings = async ({ filterVal, sortVal, page }) => {
   try {
     const res = await fetch(
       `${SERVER_URL}bookings/all?filter=${filterVal}&sortBy=${sortVal}&page=${page}`
-    );
+      , {
+        credentials: "include",
+
+      });
     const data = await res.json();
     if (!res.ok) {
       if (res.status === 403) return await refreshTokenFunc();
@@ -72,11 +75,14 @@ export async function getBookingAfterDate(numDays, fields) {
   try {
     const res = await fetch(
       `${SERVER_URL}bookings/from?last=${numDays}&fields=${fields}`
-    );
+      , {
+        credentials: "include",
+
+      });
     const data = await res.json();
     if (!res.ok) {
       if (res.status === 403) return await refreshTokenFunc();
-      throw new Error(data.error);
+      throw new Error(data?.message || data?.error);
     }
     return data;
   } catch (error) {

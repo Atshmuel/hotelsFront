@@ -26,7 +26,10 @@ export async function updateSettings(updatedSetting) {
 }
 
 export async function getSettings() {
-  const res = await fetch(`${SERVER_URL}settings`);
+  const res = await fetch(`${SERVER_URL}settings`, {
+    credentials: "include",
+
+  });
   const data = await res.json();
   //TODO should edit the error message
   if (!res.ok) {

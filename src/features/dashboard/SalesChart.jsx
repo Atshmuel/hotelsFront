@@ -34,7 +34,7 @@ export function SalseChart({ bookingsSales, numOfDays }) {
       text: "#374151",
       background: "#fff",
     };
-  if (!bookingsSales) return
+  if (!bookingsSales || !bookingsSales?.length) return
   const newData = bookingsSales?.map((date) => {
     return {
       date: String(new Date(date.createdAt.slice(0, 10))).slice(4, 10),

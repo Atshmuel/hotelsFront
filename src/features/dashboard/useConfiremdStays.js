@@ -10,7 +10,6 @@ export function useConfirmedStays() {
         queryKey: ['checkins', numOfDays],
         queryFn: () => getBookingAfterDate(numOfDays, "numNights-status")
     })
-
     return { stays, isLoadingStays, numOfDays, error }
 }
 

@@ -2,7 +2,10 @@ import { SERVER_URL } from "../utils/config";
 import { refreshTokenFunc } from "./apiUsers";
 
 export const getCabin = async (id) => {
-  const res = await fetch(`${SERVER_URL}cabins/byID?id=${id}`);
+  const res = await fetch(`${SERVER_URL}cabins/byID?id=${id}`, {
+    credentials: "include",
+
+  });
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data?.error);
@@ -11,7 +14,10 @@ export const getCabin = async (id) => {
 };
 
 export const getCabins = async () => {
-  const res = await fetch(`${SERVER_URL}cabins`);
+  const res = await fetch(`${SERVER_URL}cabins`, {
+    credentials: "include",
+
+  });
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data);
@@ -57,6 +63,7 @@ export const deleteCabin = async (id) => {
   }
   return data;
 };
+
 
 export const editCabin = async (id, newCabinData) => {
   if (!id) throw new Error(`Could not edit cabin without ID.`);
