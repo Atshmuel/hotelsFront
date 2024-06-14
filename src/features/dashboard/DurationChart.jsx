@@ -152,7 +152,6 @@ function DurationChart({ stays, numOfDays }) {
         <Legend verticalAlign="middle" layout="vertical" iconType="circle" iconSize={10} align="right" />
       </PieChart>
     </ResponsiveContainer>
-
   </ChartBox>
 }
 
