@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import SpinnerMini from '../../ui/SpinnerMini'
 const StyledStat = styled.div`
   /* Box */
   background-color: var(--color-grey-0);

@@ -4,11 +4,11 @@ import { refreshTokenFunc } from "./apiUsers";
 export const getAllBookings = async ({ filterVal, sortVal, page }) => {
   try {
     const res = await fetch(
-      `${SERVER_URL}bookings/all?filter=${filterVal}&sortBy=${sortVal}&page=${page}`
-      , {
+      `${SERVER_URL}bookings/all?filter=${filterVal}&sortBy=${sortVal}&page=${page}`,
+      {
         credentials: "include",
-
-      });
+      }
+    );
     const data = await res.json();
     if (!res.ok) {
       if (res.status === 403) return await refreshTokenFunc();
@@ -22,7 +22,9 @@ export const getAllBookings = async ({ filterVal, sortVal, page }) => {
 
 export async function getBooking(id) {
   try {
-    const res = await fetch(`${SERVER_URL}bookings?bookingId=${id}`);
+    const res = await fetch(`${SERVER_URL}bookings?bookingId=${id}`, {
+      credentials: "include",
+    });
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.error);
@@ -72,20 +74,16 @@ export async function deleteBookingApi(id) {
 }
 
 export async function getBookingAfterDate(numDays, fields) {
-  try {
-    const res = await fetch(
-      `${SERVER_URL}bookings/from?last=${numDays}&fields=${fields}`
-      , {
-        credentials: "include",
-
-      });
-    const data = await res.json();
-    if (!res.ok) {
-      if (res.status === 403) return await refreshTokenFunc();
-      throw new Error(data?.message || data?.error);
+  const res = await fetch(
+    `${SERVER_URL}bookings/from?last=${numDays}&fields=${fields}`,
+    {
+      credentials: "include",
     }
-    return data;
-  } catch (error) {
-    return error;
+  );
+  const data = await res.json();
+  if (!res.ok) {
+    if (res.status === 403) return await refreshTokenFunc();
+    throw new Error(data?.message || data?.error);
   }
+  return data;
 }

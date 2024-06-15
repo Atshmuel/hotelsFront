@@ -89,7 +89,7 @@ function SignupForm({ onCloseModal }) {
             required: "This field is required",
             minLength: {
               value: 4,
-              message: "Email should be at least 4 letters long.",
+              message: "Email should be at least 5 letters long.",
             },
             pattern: {
               value: /\S+@\S+\.\S+/,
@@ -132,7 +132,7 @@ function SignupForm({ onCloseModal }) {
           id="userRole"
           {...register("userRole")}
           options={options}
-          disabled={role !== "admin" || isSigningUp}
+          disabled={role === "employee" || isSigningUp}
           onChange={handleRoleChange}
         ></Select>
       </FormRow>
@@ -171,13 +171,12 @@ function SignupForm({ onCloseModal }) {
 
       <FormRow>
         <Button disabled={isSigningUp} variation="secondary" type="reset">
-          Cancel
+          Reset
         </Button>
         <Button disabled={isSigningUp}>
           {isSigningUp ? <SpinnerMini /> : "Create new user"}
         </Button>
       </FormRow>
-      <p style={{ color: 'red' }}>Siging up is blocked, please contact me for allowing this function</p>
     </Form>
   );
 }

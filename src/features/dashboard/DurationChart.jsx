@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import Heading from "../../ui/Heading";
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import { useDarkMode } from "../../contexts/DarkModeContext";
 
 const ChartBox = styled.div`
@@ -107,15 +114,12 @@ const startDataDark = [
   },
 ];
 
-
 function prepareData(startData, stays) {
-
   function incArrayValue(arr, field) {
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
     );
   }
-
   const data = stays
     ?.reduce((arr, cur) => {
       const num = cur.numNights;
@@ -136,23 +140,48 @@ function prepareData(startData, stays) {
 
 function DurationChart({ stays, numOfDays }) {
   const { isDarkMode } = useDarkMode();
-  const data = isDarkMode ? prepareData(startDataDark, stays) : prepareData(startDataLight, stays)
+  let data;
+  if (!stays) data = [];
+  else
+    data = isDarkMode
+      ? prepareData(startDataDark, stays)
+      : prepareData(startDataLight, stays);
 
-  return <ChartBox>
-    <Heading as='h2'>
-      Stay Duration at the last {numOfDays} days
-    </Heading>
-    {!data.length && <div>Sorry, there was no stays in the last {numOfDays} days</div>}
-    <ResponsiveContainer height={250} width="100%" >
-      <PieChart >
-        <Pie paddingAngle={data.length > 1 ? 2 : 0} data={data} dataKey="value" nameKey="duration" innerRadius={80} outerRadius={110} cx={150} cy={120}>
-          {data.map(entry => <Cell key={entry.duration} fill={entry.color} />)}
-        </Pie>
-        <Tooltip />
-        <Legend verticalAlign="middle" layout="vertical" iconType="circle" iconSize={10} align="right" />
-      </PieChart>
-    </ResponsiveContainer>
-  </ChartBox>
+  return (
+    <ChartBox>
+      <Heading as="h2">Stay Duration at the last {numOfDays} days</Heading>
+      {!data ||
+        (!data?.length && (
+          <div>Sorry, there was no stays in the last {numOfDays} days</div>
+        ))}
+      <ResponsiveContainer height={250} width="100%">
+        <PieChart>
+          <Pie
+            paddingAngle={data.length > 1 ? 2 : 0}
+            data={data}
+            dataKey="value"
+            nameKey="duration"
+            innerRadius={80}
+            outerRadius={110}
+            cx={150}
+            cy={120}
+          >
+            {data.map((entry) => (
+              <Cell key={entry.duration} fill={entry.color} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend
+            verticalAlign="middle"
+            layout="vertical"
+            iconType="circle"
+            iconSize={10}
+            align="right"
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
 }
 
-export default DurationChart
+export default DurationChart;
