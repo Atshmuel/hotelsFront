@@ -10,7 +10,5 @@ export function useBookingsSales() {
         queryKey: ['bookingsValue', numOfDays],
         queryFn: () => getBookingAfterDate(numOfDays, "createdAt-extrasPrice-totalPrice")
     })
-
-
     return { bookingsSales, isLoadingSales, error }
 }

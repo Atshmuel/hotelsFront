@@ -42,8 +42,11 @@ const NoActivity = styled.p`
 `;
 
 function TodayActivity({ bookings }) {
-  const foramtedBookings = bookings?.filter((booking) =>
-    booking.startDate === getToday() && booking.status === 'unconfirmed' || booking.endDate === getToday() && booking.status === 'checked-in'
+  //TODO: should fix bookings data (returns allways 10 bookings)
+  const foramtedBookings = bookings?.filter((booking) => {
+
+    return booking.startDate === getToday() && booking.status === 'unconfirmed' || booking.endDate === getToday() && booking.status === 'checked-in'
+  }
 
   )
   return (
