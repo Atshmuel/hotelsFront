@@ -48,7 +48,10 @@ const base64Converter = (file) => {
 
 
 export const imageUploader = async (files, name) => {
-  const images = await Promise.all([...files].map(file => base64Converter(file)));
+  const filesArr = [...files]
+
+  if (!(filesArr.at(0) instanceof Blob)) return files
+  const images = await Promise.all(filesArr.map(file => base64Converter(file)));
 
   const urls = await Promise.all(
     images.map(async (img, i) => {
