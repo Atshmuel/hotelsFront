@@ -8,7 +8,7 @@ export default function useOutsideClick(handler, listnerCapturing = true) {
         handler();
       }
     }
-    document.addEventListener("click", handleClick, listnerCapturing); //handling bubbeling down and not up (using listnerCapturing)
+    document.addEventListener("click", handleClick, listnerCapturing);
     return () =>
       document.removeEventListener("click", handleClick, listnerCapturing);
   }, [handler, listnerCapturing]);

@@ -6,8 +6,31 @@ import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
+import FileInput from "../../ui/FileInput";
+import { imageUploader } from '../../utils/helpers'
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdateCabin } from "./useUpdateCabin";
+import styled from "styled-components";
+
+
+const StyledDiv = styled.div`
+  display: flex;
+  width:fit-content;
+  gap:1rem;
+`;
+
+const Img = styled.img`
+  display: block;
+  width: 6rem;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  object-position: center;
+  transition: .2s ease-in-out all;
+  cursor: pointer;
+  &:hover{
+    scale:1.1
+  }
+`;
 
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { _id: editId, ...editValues } = cabinToEdit;
@@ -19,7 +42,12 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     defaultValues: isEditting ? editValues : {},
   });
   const { errors } = formState;
-  function onSubmit(formData) {
+  async function onSubmit(formData) {
+    if (!formData.imgsUrl.length) return
+
+    const urls = await imageUploader(formData.imgsUrl, formData.name)
+    formData.imgsUrl = urls
+
     if (isEditting) {
       updateCabin(
         { editId, formData },
@@ -114,13 +142,19 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow label="Cabin photo URL" error={errors?.imgUrl?.message}>
-        <Input
-          disabled={isWorking}
-          type="text"
-          id="imgUrl"
-          {...register("imgUrl", { required: "This field is required" })}
+      <FormRow label="Cabin photos" error={errors?.imgsUrl?.message}>
+        <FileInput
+          id="imgsUrl"
+          accept="image/*"
+          {...register("imgsUrl", {
+            required: isEditting ? false : "This field is required",
+          })}
         />
+        <StyledDiv>
+          {isEditting && formState.defaultValues.imgsUrl.map((img, i) => (
+            <a href={img} target="_blank" key={i}><Img src={img} /></a>
+          ))}
+        </StyledDiv>
       </FormRow>
 
       <FormRow>

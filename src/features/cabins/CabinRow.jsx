@@ -59,7 +59,7 @@ function CabinRow({ cabin }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
   const { isCreating, createCabin } = useCreateCabin();
   const {
-    imgUrl,
+    imgsUrl,
     name: cabinName,
     maxCapacity,
     regularPrice,
@@ -70,7 +70,7 @@ function CabinRow({ cabin }) {
 
   const handleDuplicate = () => {
     createCabin({
-      imgUrl,
+      imgsUrl,
       name: `Copy of ${cabinName}`,
       maxCapacity,
       regularPrice,
@@ -82,7 +82,7 @@ function CabinRow({ cabin }) {
 
   return (
     <TableRow role="row">
-      <Img src={imgUrl} />
+      <Img src={imgsUrl?.length ? imgsUrl.at(0) : ""} />
       <Cabin>{cabinName}</Cabin>
       <Capacity>Fits up to {maxCapacity} guests</Capacity>
       <Price>{formatCurrency(regularPrice)}</Price>
