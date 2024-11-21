@@ -11,6 +11,7 @@ import { imageUploader } from '../../utils/helpers'
 import { useCreateCabin } from "./useCreateCabin";
 import { useUpdateCabin } from "./useUpdateCabin";
 import styled from "styled-components";
+import { useTransition } from "react";
 
 
 const StyledDiv = styled.div`
@@ -167,7 +168,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditting ? "Update Cabin" : "Add Cabin"}
+          {isEditting ? "Update Cabin" : isWorking ? "Uploading..." : "Add Cabin"}
         </Button>
       </FormRow>
     </Form>

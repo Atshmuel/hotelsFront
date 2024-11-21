@@ -89,7 +89,7 @@ function CabinRow({ cabin }) {
       {discount ? (
         <Discount>{formatCurrency(discount)}</Discount>
       ) : (
-        <span>&minus;</span>
+        <span style={{ textAlign: "center" }}>&minus;</span>
       )}
       <Modal>
         <Menus.Menu>
