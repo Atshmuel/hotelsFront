@@ -43,7 +43,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   });
   const { errors } = formState;
   async function onSubmit(formData) {
-    if (!formData.imgsUrl.length || !formState.defaultValues.imgsUrl) return
+    if (!formData.imgsUrl.length || (isEditting && !formState.defaultValues.imgsUrl)) return
 
     const urls = await imageUploader(formData.imgsUrl, formData.name)
     formData.imgsUrl = urls

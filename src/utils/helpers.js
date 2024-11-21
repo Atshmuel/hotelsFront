@@ -58,7 +58,6 @@ export const imageUploader = async (files, name) => {
       const formData = new FormData();
       formData.append('image', img);
       formData.append('name', `${name}-${i}`);
-
       const res = await fetch(`https://api.imgbb.com/1/upload?expiration=15552000&key=dbe92cff97dfd3389f9b98097954f127`, {
         method: 'POST',
         body: formData,
