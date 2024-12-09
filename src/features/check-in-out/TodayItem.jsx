@@ -38,6 +38,7 @@ const getGuestFlag = async (id) => {
 
 function TodayItem({ activity }) {
   const { _id: id, status, guestID, numNights } = activity;
+  
   const { checkout, isCheckingOut } = useCheckout();
   const [guestData, setGuestData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,7 @@ function TodayItem({ activity }) {
       <StyledTodayItem>
         {status === 'unconfirmed' && <Tag type='green'>Arriving</Tag>}
         {status === 'checked-in' && <Tag type='blue'>Departing</Tag>}
-        <Flag src={`https://flagsapi.com/${guestData?.countryFlag}/shiny/64.png`}
+        <Flag src={`${guestData?.countryFlag}`}
           alt={`Flag of ${guestData?.country}`} />
         <Guest>{guestData.fullName}</Guest>
         <div>{numNights} nights</div>
